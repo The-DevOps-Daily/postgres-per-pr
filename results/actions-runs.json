@@ -1,6 +1,6 @@
 {
   "repo": "The-DevOps-Daily/postgres-per-pr",
-  "collectedAt": "2026-11-22T09:21:10.421Z",
+  "collectedAt": "2026-11-22T09:28:17.589Z",
   "runs": [
     {
       "id": 44997940692,
@@ -2790,6 +2790,470 @@
               "name": "Post Delete the Neon branch",
               "conclusion": "success",
               "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success",
+              "seconds": 0
+            }
+          ]
+        }
+      ],
+      "timings": null
+    },
+    {
+      "id": 45007473956,
+      "workflow": "preview-db",
+      "event": "pull_request",
+      "action": "Run the copy-paste example workflows",
+      "branch": "example-workflows",
+      "pr": null,
+      "conclusion": "success",
+      "createdAt": "2026-11-22T09:25:25Z",
+      "runSeconds": 16,
+      "jobs": [
+        {
+          "name": "preview",
+          "conclusion": "success",
+          "queuedSeconds": 2,
+          "seconds": 13,
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Run npm ci --ignore-scripts",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Expiry date",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Create the Neon branch",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Migrate, seed, test",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Schema diff against main",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Comment the connection details",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success",
+              "seconds": 0
+            }
+          ]
+        }
+      ],
+      "timings": null
+    },
+    {
+      "id": 45007473959,
+      "workflow": "ci-container",
+      "event": "pull_request",
+      "action": "Run the copy-paste example workflows",
+      "branch": "example-workflows",
+      "pr": null,
+      "conclusion": "success",
+      "createdAt": "2026-11-22T09:25:25Z",
+      "runSeconds": 34,
+      "jobs": [
+        {
+          "name": "test",
+          "conclusion": "success",
+          "queuedSeconds": 2,
+          "seconds": 31,
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Initialize containers",
+              "conclusion": "success",
+              "seconds": 20
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run echo \"TIMINGS_FILE=$RUNNER_TEMP/timings.jsonl\" >> \"$GITHUB_ENV\"",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run node scripts/wait-for-db.mjs",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run node scripts/migrate.mjs",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run node scripts/seed.mjs",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Test",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Stop containers",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success",
+              "seconds": 1
+            }
+          ]
+        }
+      ],
+      "timings": [
+        {
+          "step": "first-query",
+          "ms": 21,
+          "attempts": 1
+        },
+        {
+          "step": "migrate",
+          "applied": [
+            {
+              "name": "001_create_users.sql",
+              "ms": 3
+            },
+            {
+              "name": "002_create_bookmarks.sql",
+              "ms": 3
+            },
+            {
+              "name": "003_bookmarks_archived_at.sql",
+              "ms": 1
+            }
+          ],
+          "ms": 31
+        },
+        {
+          "step": "seed",
+          "ms": 25
+        },
+        {
+          "step": "test",
+          "ms": 282
+        }
+      ]
+    },
+    {
+      "id": 45007475460,
+      "workflow": "preview-db",
+      "event": "pull_request",
+      "action": "Run the copy-paste example workflows",
+      "branch": "example-workflows",
+      "pr": null,
+      "conclusion": "success",
+      "createdAt": "2026-11-22T09:25:26Z",
+      "runSeconds": 30,
+      "jobs": [
+        {
+          "name": "preview",
+          "conclusion": "success",
+          "queuedSeconds": 3,
+          "seconds": 11,
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run npm ci --ignore-scripts",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Expiry date",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Create the Neon branch",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Migrate, seed, test",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Schema diff against main",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Comment the connection details",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success",
+              "seconds": 0
+            }
+          ]
+        }
+      ],
+      "timings": null
+    },
+    {
+      "id": 45007475492,
+      "workflow": "ci-container",
+      "event": "pull_request",
+      "action": "Run the copy-paste example workflows",
+      "branch": "example-workflows",
+      "pr": null,
+      "conclusion": "success",
+      "createdAt": "2026-11-22T09:25:26Z",
+      "runSeconds": 20,
+      "jobs": [
+        {
+          "name": "test",
+          "conclusion": "success",
+          "queuedSeconds": 2,
+          "seconds": 18,
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Initialize containers",
+              "conclusion": "success",
+              "seconds": 10
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run npm ci --ignore-scripts",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run echo \"TIMINGS_FILE=$RUNNER_TEMP/timings.jsonl\" >> \"$GITHUB_ENV\"",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run node scripts/wait-for-db.mjs",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run node scripts/migrate.mjs",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run node scripts/seed.mjs",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Test",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+              "conclusion": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Stop containers",
+              "conclusion": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "conclusion": "success",
+              "seconds": 0
+            }
+          ]
+        }
+      ],
+      "timings": [
+        {
+          "step": "first-query",
+          "ms": 21,
+          "attempts": 1
+        },
+        {
+          "step": "migrate",
+          "applied": [
+            {
+              "name": "001_create_users.sql",
+              "ms": 3
+            },
+            {
+              "name": "002_create_bookmarks.sql",
+              "ms": 3
+            },
+            {
+              "name": "003_bookmarks_archived_at.sql",
+              "ms": 1
+            }
+          ],
+          "ms": 30
+        },
+        {
+          "step": "seed",
+          "ms": 24
+        },
+        {
+          "step": "test",
+          "ms": 249
+        }
+      ]
+    },
+    {
+      "id": 45007533422,
+      "workflow": "preview-db-cleanup",
+      "event": "pull_request",
+      "action": "Run the copy-paste example workflows",
+      "branch": "example-workflows",
+      "pr": null,
+      "conclusion": "success",
+      "createdAt": "2026-11-22T09:26:09Z",
+      "runSeconds": 21,
+      "jobs": [
+        {
+          "name": "delete",
+          "conclusion": "success",
+          "queuedSeconds": 2,
+          "seconds": 18,
+          "steps": [
+            {
+              "name": "Set up job",
+              "conclusion": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Delete the Neon branch",
+              "conclusion": "success",
+              "seconds": 12
+            },
+            {
+              "name": "Post Delete the Neon branch",
+              "conclusion": "success",
+              "seconds": 0
             },
             {
               "name": "Complete job",

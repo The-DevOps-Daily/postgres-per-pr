@@ -13,6 +13,8 @@ Every branch the workflows and benches created, and what deleted it. Workflow ru
 | `preview/pr-2` (again) | preview-db, PR #2 reopened | deleted by hand to simulate an expiry; the close run then found nothing and skipped the delete step (success) | not found |
 | `preview/pr-4` | example preview-db, PR #4 opened | example cleanup, PR #4 closed | success |
 | `preview/pr-4` (again) | example preview-db, PR #4 reopened | deleted by hand; the example cleanup (no lookup step) then failed: `ERROR: Branch preview/pr-4 not found.` | failure, as expected |
+| `preview/pr-4` (2 more times) | updated example preview-db, PR #4 reopened to check the example changes | example cleanup, PR #4 closed | success |
+| `page-test-1`, `page-test-2` | Neon API, to test branch list pagination | deleted by hand | not in the final list |
 | `preview/pr-3` (planted orphan, PR closed) | Neon API | orphan-sweep: `deleted (PR #3 is closed)` | not in the final list |
 | `preview/pr-99` (planted orphan, no PR) | Neon API | orphan-sweep: `deleted (PR #99 is missing)` | not in the final list |
 | `dev/alice` (planted, not a preview name) | Neon API | kept by orphan-sweep; deleted by hand afterwards | not in the final list |
