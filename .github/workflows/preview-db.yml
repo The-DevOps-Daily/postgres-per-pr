@@ -25,7 +25,6 @@ jobs:
     timeout-minutes: 15
     env:
       BRANCH: preview/pr-${{ github.event.pull_request.number }}
-      TIMINGS_FILE: ${{ runner.temp }}/timings.jsonl
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,6 +40,7 @@ jobs:
       # Backstop: Neon deletes the branch on its own after 14 days even if no cleanup runs.
       - name: Expiry date
         run: |
+          echo "TIMINGS_FILE=$RUNNER_TEMP/timings.jsonl" >> "$GITHUB_ENV"
           echo "EXPIRES_AT=$(date -u --date '+14 days' +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
           echo "CREATE_STARTED=$(date +%s%3N)" >> "$GITHUB_ENV"
 

@@ -23,7 +23,6 @@ jobs:
           --health-cmd "pg_isready -U postgres" --health-interval 2s --health-timeout 5s --health-retries 30
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/app
-      TIMINGS_FILE: ${{ runner.temp }}/timings.jsonl
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -33,6 +32,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: echo "TIMINGS_FILE=$RUNNER_TEMP/timings.jsonl" >> "$GITHUB_ENV"
       - run: node scripts/wait-for-db.mjs
       - run: node scripts/migrate.mjs
       - run: node scripts/seed.mjs
