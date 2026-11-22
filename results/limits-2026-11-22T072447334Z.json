@@ -1,0 +1,458 @@
+{
+  "bench": "limits",
+  "at": "2026-11-22T07:24:47.606Z",
+  "target": 25,
+  "branchesBefore": 1,
+  "creates": [
+    {
+      "n": 2,
+      "name": "bench/limit-2026-11-22T072447334Z-2",
+      "id": "br-proud-smoke-beve4zr7",
+      "ok": true,
+      "ms": 1262,
+      "endpointState": "init"
+    },
+    {
+      "n": 3,
+      "name": "bench/limit-2026-11-22T072447334Z-3",
+      "id": "br-plain-darkness-bep1pbao",
+      "ok": true,
+      "ms": 1833,
+      "endpointState": "init"
+    },
+    {
+      "n": 4,
+      "name": "bench/limit-2026-11-22T072447334Z-4",
+      "id": "br-cold-tree-beot9bes",
+      "ok": true,
+      "ms": 2135,
+      "endpointState": "init"
+    },
+    {
+      "n": 5,
+      "name": "bench/limit-2026-11-22T072447334Z-5",
+      "id": "br-shy-boat-be9ifsb2",
+      "ok": true,
+      "ms": 1205,
+      "endpointState": "init"
+    },
+    {
+      "n": 6,
+      "name": "bench/limit-2026-11-22T072447334Z-6",
+      "id": "br-calm-violet-be21x6ns",
+      "ok": true,
+      "ms": 1256,
+      "endpointState": "init"
+    },
+    {
+      "n": 7,
+      "name": "bench/limit-2026-11-22T072447334Z-7",
+      "id": "br-bold-tooth-becljdcl",
+      "ok": true,
+      "ms": 1500,
+      "endpointState": "init"
+    },
+    {
+      "n": 8,
+      "name": "bench/limit-2026-11-22T072447334Z-8",
+      "id": "br-icy-shadow-bekoov1b",
+      "ok": true,
+      "ms": 2291,
+      "endpointState": "init"
+    },
+    {
+      "n": 9,
+      "name": "bench/limit-2026-11-22T072447334Z-9",
+      "id": "br-falling-grass-benuc6os",
+      "ok": true,
+      "ms": 1615,
+      "endpointState": "init"
+    },
+    {
+      "n": 10,
+      "name": "bench/limit-2026-11-22T072447334Z-10",
+      "id": "br-blue-base-be5o0l6q",
+      "ok": true,
+      "ms": 2130,
+      "endpointState": "init"
+    },
+    {
+      "n": 11,
+      "name": "bench/limit-2026-11-22T072447334Z-11",
+      "id": "br-old-dream-be95zwyq",
+      "ok": true,
+      "ms": 1220,
+      "endpointState": "init"
+    },
+    {
+      "n": 12,
+      "name": "bench/limit-2026-11-22T072447334Z-12",
+      "id": "br-proud-union-belbdytq",
+      "ok": true,
+      "ms": 2407,
+      "endpointState": "init"
+    },
+    {
+      "n": 13,
+      "name": "bench/limit-2026-11-22T072447334Z-13",
+      "id": "br-broad-voice-bex90gzw",
+      "ok": true,
+      "ms": 1227,
+      "endpointState": "init"
+    },
+    {
+      "n": 14,
+      "name": "bench/limit-2026-11-22T072447334Z-14",
+      "id": "br-steep-morning-be9v63x3",
+      "ok": true,
+      "ms": 1894,
+      "endpointState": "init"
+    },
+    {
+      "n": 15,
+      "name": "bench/limit-2026-11-22T072447334Z-15",
+      "id": "br-muddy-surf-be5jub1q",
+      "ok": true,
+      "ms": 2253,
+      "endpointState": "init"
+    },
+    {
+      "n": 16,
+      "name": "bench/limit-2026-11-22T072447334Z-16",
+      "id": "br-summer-cake-beih546j",
+      "ok": true,
+      "ms": 1220,
+      "endpointState": "init"
+    },
+    {
+      "n": 17,
+      "name": "bench/limit-2026-11-22T072447334Z-17",
+      "id": "br-snowy-feather-becqlosx",
+      "ok": true,
+      "ms": 1814,
+      "endpointState": "init"
+    },
+    {
+      "n": 18,
+      "name": "bench/limit-2026-11-22T072447334Z-18",
+      "id": "br-still-butterfly-beti8fzl",
+      "ok": true,
+      "ms": 1223,
+      "endpointState": "init"
+    },
+    {
+      "n": 19,
+      "name": "bench/limit-2026-11-22T072447334Z-19",
+      "id": "br-lively-rice-be1o73gp",
+      "ok": true,
+      "ms": 1260,
+      "endpointState": "init"
+    },
+    {
+      "n": 20,
+      "name": "bench/limit-2026-11-22T072447334Z-20",
+      "id": "br-floral-credit-besa4wp4",
+      "ok": true,
+      "ms": 1229,
+      "endpointState": "init"
+    },
+    {
+      "n": 21,
+      "name": "bench/limit-2026-11-22T072447334Z-21",
+      "id": "br-young-poetry-beuhbozz",
+      "ok": true,
+      "ms": 1223,
+      "endpointState": "init"
+    },
+    {
+      "n": 22,
+      "name": "bench/limit-2026-11-22T072447334Z-22",
+      "id": "br-floral-snow-bedqx2rw",
+      "ok": true,
+      "ms": 1438,
+      "endpointState": "idle"
+    },
+    {
+      "n": 23,
+      "name": "bench/limit-2026-11-22T072447334Z-23",
+      "id": "br-soft-mouse-beiyta1d",
+      "ok": true,
+      "ms": 578,
+      "endpointState": "idle"
+    },
+    {
+      "n": 24,
+      "name": "bench/limit-2026-11-22T072447334Z-24",
+      "id": "br-little-glade-bew5hc3k",
+      "ok": true,
+      "ms": 561,
+      "endpointState": "idle"
+    },
+    {
+      "n": 25,
+      "name": "bench/limit-2026-11-22T072447334Z-25",
+      "id": "br-dry-dawn-be2m0njw",
+      "ok": true,
+      "ms": 599,
+      "endpointState": "idle"
+    }
+  ],
+  "queries": [
+    {
+      "id": "br-proud-smoke-beve4zr7",
+      "ok": true,
+      "attempts": 1,
+      "ms": 323
+    },
+    {
+      "id": "br-plain-darkness-bep1pbao",
+      "ok": true,
+      "attempts": 1,
+      "ms": 371
+    },
+    {
+      "id": "br-cold-tree-beot9bes",
+      "ok": true,
+      "attempts": 1,
+      "ms": 313
+    },
+    {
+      "id": "br-shy-boat-be9ifsb2",
+      "ok": true,
+      "attempts": 1,
+      "ms": 579
+    },
+    {
+      "id": "br-calm-violet-be21x6ns",
+      "ok": true,
+      "attempts": 1,
+      "ms": 494
+    },
+    {
+      "id": "br-bold-tooth-becljdcl",
+      "ok": true,
+      "attempts": 1,
+      "ms": 727
+    },
+    {
+      "id": "br-icy-shadow-bekoov1b",
+      "ok": true,
+      "attempts": 1,
+      "ms": 387
+    },
+    {
+      "id": "br-falling-grass-benuc6os",
+      "ok": true,
+      "attempts": 1,
+      "ms": 781
+    },
+    {
+      "id": "br-blue-base-be5o0l6q",
+      "ok": true,
+      "attempts": 1,
+      "ms": 433
+    },
+    {
+      "id": "br-old-dream-be95zwyq",
+      "ok": true,
+      "attempts": 1,
+      "ms": 622
+    },
+    {
+      "id": "br-proud-union-belbdytq",
+      "ok": true,
+      "attempts": 1,
+      "ms": 352
+    },
+    {
+      "id": "br-broad-voice-bex90gzw",
+      "ok": true,
+      "attempts": 1,
+      "ms": 349
+    },
+    {
+      "id": "br-steep-morning-be9v63x3",
+      "ok": true,
+      "attempts": 1,
+      "ms": 455
+    },
+    {
+      "id": "br-muddy-surf-be5jub1q",
+      "ok": true,
+      "attempts": 1,
+      "ms": 475
+    },
+    {
+      "id": "br-summer-cake-beih546j",
+      "ok": true,
+      "attempts": 1,
+      "ms": 467
+    },
+    {
+      "id": "br-snowy-feather-becqlosx",
+      "ok": true,
+      "attempts": 1,
+      "ms": 651
+    },
+    {
+      "id": "br-still-butterfly-beti8fzl",
+      "ok": true,
+      "attempts": 1,
+      "ms": 554
+    },
+    {
+      "id": "br-lively-rice-be1o73gp",
+      "ok": true,
+      "attempts": 1,
+      "ms": 635
+    },
+    {
+      "id": "br-floral-credit-besa4wp4",
+      "ok": true,
+      "attempts": 1,
+      "ms": 625
+    },
+    {
+      "id": "br-young-poetry-beuhbozz",
+      "ok": true,
+      "attempts": 1,
+      "ms": 249
+    },
+    {
+      "id": "br-floral-snow-bedqx2rw",
+      "ok": false,
+      "attempts": 52,
+      "error": "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again."
+    },
+    {
+      "id": "br-soft-mouse-beiyta1d",
+      "ok": false,
+      "attempts": 52,
+      "error": "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again."
+    },
+    {
+      "id": "br-little-glade-bew5hc3k",
+      "ok": false,
+      "attempts": 51,
+      "error": "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again."
+    },
+    {
+      "id": "br-dry-dawn-be2m0njw",
+      "ok": false,
+      "attempts": 52,
+      "error": "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again."
+    }
+  ],
+  "endpointStates": [
+    {
+      "branch": "br-lively-union-beyn6m9x",
+      "state": "active"
+    },
+    {
+      "branch": "br-floral-snow-bedqx2rw",
+      "state": "idle"
+    },
+    {
+      "branch": "br-soft-mouse-beiyta1d",
+      "state": "idle"
+    },
+    {
+      "branch": "br-little-glade-bew5hc3k",
+      "state": "idle"
+    },
+    {
+      "branch": "br-dry-dawn-be2m0njw",
+      "state": "idle"
+    },
+    {
+      "branch": "br-snowy-feather-becqlosx",
+      "state": "active"
+    },
+    {
+      "branch": "br-floral-credit-besa4wp4",
+      "state": "active"
+    },
+    {
+      "branch": "br-bold-tooth-becljdcl",
+      "state": "active"
+    },
+    {
+      "branch": "br-still-butterfly-beti8fzl",
+      "state": "active"
+    },
+    {
+      "branch": "br-lively-rice-be1o73gp",
+      "state": "active"
+    },
+    {
+      "branch": "br-cold-tree-beot9bes",
+      "state": "active"
+    },
+    {
+      "branch": "br-calm-violet-be21x6ns",
+      "state": "active"
+    },
+    {
+      "branch": "br-young-poetry-beuhbozz",
+      "state": "active"
+    },
+    {
+      "branch": "br-icy-shadow-bekoov1b",
+      "state": "active"
+    },
+    {
+      "branch": "br-proud-smoke-beve4zr7",
+      "state": "active"
+    },
+    {
+      "branch": "br-falling-grass-benuc6os",
+      "state": "active"
+    },
+    {
+      "branch": "br-shy-boat-be9ifsb2",
+      "state": "active"
+    },
+    {
+      "branch": "br-plain-darkness-bep1pbao",
+      "state": "active"
+    },
+    {
+      "branch": "br-proud-union-belbdytq",
+      "state": "active"
+    },
+    {
+      "branch": "br-old-dream-be95zwyq",
+      "state": "active"
+    },
+    {
+      "branch": "br-steep-morning-be9v63x3",
+      "state": "active"
+    },
+    {
+      "branch": "br-broad-voice-bex90gzw",
+      "state": "active"
+    },
+    {
+      "branch": "br-muddy-surf-be5jub1q",
+      "state": "active"
+    },
+    {
+      "branch": "br-summer-cake-beih546j",
+      "state": "active"
+    },
+    {
+      "branch": "br-blue-base-be5o0l6q",
+      "state": "active"
+    }
+  ],
+  "branchesAtPeak": 25,
+  "answered": 20,
+  "refused": [
+    "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again.",
+    "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again.",
+    "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again.",
+    "53000 You have exceeded the limit of concurrently active endpoints. Please suspend some endpoints and try again."
+  ],
+  "branchesAfter": 1,
+  "cleanedUp": true
+}
