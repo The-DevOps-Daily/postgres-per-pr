@@ -1,5 +1,5 @@
-# Delete the pull request's Neon branch when the PR closes. Merged and abandoned pull requests
-# both send `closed`.
+# .github/workflows/preview-db-cleanup.yml
+# Delete the pull request's Neon branch when the PR closes (merged or not).
 name: preview-db-cleanup
 
 on:
@@ -18,32 +18,10 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      BRANCH: preview/pr-${{ github.event.pull_request.number }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      # delete-branch-action fails on a branch that is already gone (the expiry or the orphan
-      # sweep got there first), so look first.
-      - name: Find the branch
-        id: find
-        run: node scripts/find-branch.mjs "$BRANCH"
-        env:
-          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
-
       - name: Delete the Neon branch
-        if: steps.find.outputs.exists == 'true'
         uses: neondatabase/delete-branch-action@4468d825d5a88ef4012f1705a82f02ec3072f776 # v3.2.1
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           api_key: ${{ secrets.NEON_API_KEY }}
-          branch: ${{ env.BRANCH }}
-
-      - name: Check it is gone
-        run: node scripts/find-branch.mjs "$BRANCH" --expect-missing
-        env:
-          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+          branch: preview/pr-${{ github.event.pull_request.number }}

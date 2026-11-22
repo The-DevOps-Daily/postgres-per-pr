@@ -1,14 +1,13 @@
+# .github/workflows/preview-db.yml
 # A Postgres database per pull request: a Neon branch of main named preview/pr-<number>.
-# Opened, reopened or pushed to: create the branch (or reuse it), migrate, seed, test, and post
-# the schema diff and the connection details (no password) on the pull request.
+# Needs a NEON_API_KEY secret and a NEON_PROJECT_ID variable (the Neon GitHub integration sets both).
 name: preview-db
 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
 
-# One run per pull request at a time, shared with preview-db-cleanup.yml, so a close never
-# races a create.
+# One run per pull request at a time, shared with the cleanup workflow.
 concurrency:
   group: preview-db-${{ github.event.pull_request.number }}
   cancel-in-progress: false
@@ -19,7 +18,7 @@ permissions:
 
 jobs:
   preview:
-    # Pull requests from forks get no secrets; only run for branches of this repository.
+    # Pull requests from forks get no secrets.
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -37,12 +36,9 @@ jobs:
 
       - run: npm ci --ignore-scripts
 
-      # Backstop: Neon deletes the branch on its own after 14 days even if no cleanup runs.
+      # Backstop: Neon deletes the branch after 14 days even if no cleanup runs.
       - name: Expiry date
-        run: |
-          echo "TIMINGS_FILE=$RUNNER_TEMP/timings.jsonl" >> "$GITHUB_ENV"
-          echo "EXPIRES_AT=$(date -u --date '+14 days' +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
-          echo "CREATE_STARTED=$(date +%s%3N)" >> "$GITHUB_ENV"
+        run: echo "EXPIRES_AT=$(date -u --date '+14 days' +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
       - name: Create the Neon branch
         id: branch
@@ -54,31 +50,13 @@ jobs:
           parent_branch: main
           expires_at: ${{ env.EXPIRES_AT }}
 
-      - name: Record create time
+      # Replace these with your own migrate, seed and test commands.
+      - name: Migrate, seed, test
         run: |
-          echo "{\"step\":\"create-branch\",\"ms\":$(( $(date +%s%3N) - CREATE_STARTED )),\"created\":\"${{ steps.branch.outputs.created }}\"}" | tee -a "$TIMINGS_FILE"
-
-      - name: Wait for the first query
-        run: node scripts/wait-for-db.mjs
-        env:
-          DATABASE_URL: ${{ steps.branch.outputs.db_url }}
-
-      - name: Migrate
-        id: migrate
-        run: node scripts/migrate.mjs
-        env:
-          DATABASE_URL: ${{ steps.branch.outputs.db_url }}
-
-      - name: Seed test fixtures
-        run: node scripts/seed.mjs
-        env:
-          DATABASE_URL: ${{ steps.branch.outputs.db_url }}
-
-      - name: Test
-        run: |
-          t=$(date +%s%3N)
+          node scripts/wait-for-db.mjs
+          node scripts/migrate.mjs
+          node scripts/seed.mjs
           npm test
-          echo "{\"step\":\"test\",\"ms\":$(( $(date +%s%3N) - t ))}" | tee -a "$TIMINGS_FILE"
         env:
           DATABASE_URL: ${{ steps.branch.outputs.db_url }}
 
@@ -91,42 +69,24 @@ jobs:
           compare_branch: ${{ env.BRANCH }}
           base_branch: main
 
+      # One comment per pull request, updated on every push. No password in it.
       - name: Comment the connection details
         if: ${{ !cancelled() && steps.branch.outcome == 'success' }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           DB_HOST: ${{ steps.branch.outputs.db_host }}
           BRANCH_ID: ${{ steps.branch.outputs.branch_id }}
-          CREATED: ${{ steps.branch.outputs.created }}
           JOB_STATUS: ${{ job.status }}
         with:
           script: |
-            const fs = require('fs');
-            const timings = fs.existsSync(process.env.TIMINGS_FILE)
-              ? fs.readFileSync(process.env.TIMINGS_FILE, 'utf8').trim().split('\n').map(JSON.parse)
-              : [];
             const marker = '<!-- preview-db -->';
-            const run = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const rows = timings.map((t) => `| ${t.step} | ${t.ms} ms |`).join('\n');
+            const { BRANCH, BRANCH_ID, DB_HOST, EXPIRES_AT, JOB_STATUS } = process.env;
             const body = [
               marker,
-              `### Preview database: \`${process.env.BRANCH}\``,
-              '',
-              `| | |`,
-              `| --- | --- |`,
-              `| Neon branch | \`${process.env.BRANCH}\` (\`${process.env.BRANCH_ID}\`), ${process.env.CREATED === 'true' ? 'created' : 'reused'} by this run |`,
-              `| Host | \`${process.env.DB_HOST}\` |`,
-              `| Database / role | \`neondb\` / \`neondb_owner\` |`,
-              `| Expires | ${process.env.EXPIRES_AT} (deleted earlier when this PR closes) |`,
-              `| Checks | ${process.env.JOB_STATUS === 'success' ? 'migrate, seed and tests passed' : 'a step failed, see the run'} |`,
-              '',
-              'The password is not posted. Get a connection string with `neon connection-string preview/pr-<n>` or from the Neon Console.',
-              '',
-              '| Step | Time |',
-              '| --- | --- |',
-              rows,
-              '',
-              `[Workflow run](${run})`,
+              `### Preview database: \`${BRANCH}\``,
+              `- Neon branch: \`${BRANCH_ID}\`, expires ${EXPIRES_AT} or when this PR closes`,
+              `- Host: \`${DB_HOST}\`, database \`neondb\`, role \`neondb_owner\``,
+              `- Migrate, seed, test: ${JOB_STATUS === 'success' ? 'passed' : 'failed, see the run'}`,
             ].join('\n');
             const { owner, repo } = context.repo;
             const issue_number = context.payload.pull_request.number;
@@ -134,11 +94,3 @@ jobs:
             const old = comments.find((c) => c.body.startsWith(marker));
             if (old) await github.rest.issues.updateComment({ owner, repo, comment_id: old.id, body });
             else await github.rest.issues.createComment({ owner, repo, issue_number, body });
-
-      - name: Upload timings
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: timings-pr-${{ github.event.pull_request.number }}-run-${{ github.run_attempt }}-${{ github.run_id }}
-          path: ${{ runner.temp }}/timings.jsonl
-          if-no-files-found: ignore
