@@ -1,0 +1,6 @@
+# GET /projects/{id}/endpoints at 2026-11-22T07:46:18Z (branch_id current_state suspend_timeout_seconds last_active suspended_at updated_at)
+# preview computes created by create-branch-action with its default suspend_timeout (0); last connection to them: bench/branch-objects.mjs at about 07:33
+br-round-bar-be4gh1kx idle 0 2026-11-22T07:29:15Z 2026-11-22T07:38:16Z 2026-11-22T07:38:16Z
+br-lively-union-beyn6m9x idle 0 2026-11-22T07:32:58Z 2026-11-22T07:38:01Z 2026-11-22T07:38:01Z
+br-damp-frog-bea6q8tw idle 0 2026-11-22T07:29:26Z 2026-11-22T07:38:15Z 2026-11-22T07:38:15Z
+br-late-forest-becxyfi0 idle 0 2026-11-22T07:29:23Z 2026-11-22T07:38:16Z 2026-11-22T07:38:16Z

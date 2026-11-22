@@ -1,0 +1,66 @@
+{
+  "at": "2026-11-22T07:32:54.423Z",
+  "branches": [
+    {
+      "name": "main",
+      "id": "br-lively-union-beyn6m9x",
+      "dbBytes": 308985856,
+      "bookmarks": 1002000,
+      "migrations": [
+        "001_create_users.sql",
+        "002_create_bookmarks.sql"
+      ],
+      "changed": []
+    },
+    {
+      "name": "preview/pr-2",
+      "id": "br-damp-frog-bea6q8tw",
+      "dbBytes": 349642752,
+      "bookmarks": 1002050,
+      "migrations": [
+        "001_create_users.sql",
+        "002_create_bookmarks.sql",
+        "004_bookmarks_user_recent_index.sql"
+      ],
+      "changed": [
+        {
+          "relation": "bookmarks_user_recent_idx",
+          "kind": "i",
+          "bytes": 40656896,
+          "mainBytes": 0
+        }
+      ]
+    },
+    {
+      "name": "preview/pr-3",
+      "id": "br-late-forest-becxyfi0",
+      "dbBytes": 376954880,
+      "bookmarks": 1000050,
+      "migrations": [
+        "001_create_users.sql",
+        "002_create_bookmarks.sql",
+        "005_bookmarks_unique_url_case.sql"
+      ],
+      "changed": [
+        {
+          "relation": "bookmarks_user_url_lower_key",
+          "kind": "i",
+          "bytes": 67969024,
+          "mainBytes": 0
+        }
+      ]
+    },
+    {
+      "name": "preview/pr-1",
+      "id": "br-round-bar-be4gh1kx",
+      "dbBytes": 308985856,
+      "bookmarks": 1002050,
+      "migrations": [
+        "001_create_users.sql",
+        "002_create_bookmarks.sql",
+        "003_bookmarks_archived_at.sql"
+      ],
+      "changed": []
+    }
+  ]
+}
