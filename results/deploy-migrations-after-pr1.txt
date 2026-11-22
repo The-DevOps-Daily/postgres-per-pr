@@ -1,0 +1,4 @@
+# deploy-migrations run 45005775661 (after PR #1 merged), step log lines
+DATABASE_URL set for main (br-lively-union-beyn6m9x)
+applied 003_bookmarks_archived_at.sql in 81 ms
+{"step":"migrate","applied":[{"name":"003_bookmarks_archived_at.sql","ms":81}],"ms":898}

@@ -27,9 +27,18 @@ export async function api(method, path, body, { allow = [] } = {}) {
 
 export const project = () => need('NEON_PROJECT_ID');
 
+// Follows pagination, so a project with many branches is listed in full.
 export async function listBranches() {
-  const { branches } = await api('GET', `/projects/${project()}/branches`);
-  return branches;
+  const all = [];
+  let cursor;
+  for (;;) {
+    const params = new URLSearchParams({ limit: process.env.NEON_PAGE_LIMIT ?? '100' });
+    if (cursor) params.set('cursor', cursor);
+    const { branches, pagination } = await api('GET', `/projects/${project()}/branches?${params}`);
+    all.push(...branches);
+    if (!branches.length || !pagination?.next || pagination.next === cursor) return all;
+    cursor = pagination.next;
+  }
 }
 
 export async function waitForOperations(operations, timeoutMs = 300_000) {
