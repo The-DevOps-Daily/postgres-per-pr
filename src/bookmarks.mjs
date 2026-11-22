@@ -33,3 +33,11 @@ export async function listBookmarks(db, userId, { limit = 20, tag } = {}) {
 export async function deleteUser(db, userId) {
   await db.query('DELETE FROM users WHERE id = $1', [userId]);
 }
+
+export async function archiveBookmark(db, userId, id) {
+  const { rowCount } = await db.query(
+    'UPDATE bookmarks SET archived_at = now() WHERE user_id = $1 AND id = $2 AND archived_at IS NULL',
+    [userId, id],
+  );
+  return rowCount === 1;
+}
