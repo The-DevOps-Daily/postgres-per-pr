@@ -1,0 +1,35 @@
+# After a merge, apply the new migrations to the main branch (production in this demo), so the
+# next preview branch starts from the merged schema.
+name: deploy-migrations
+
+on:
+  push:
+    branches: [main]
+    paths: ['migrations/**']
+
+concurrency:
+  group: deploy-migrations
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Get the main branch connection string
+        run: node scripts/main-url.mjs
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+      - run: node scripts/migrate.mjs
