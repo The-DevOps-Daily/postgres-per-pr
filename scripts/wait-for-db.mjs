@@ -3,6 +3,13 @@
 import { appendFileSync } from 'node:fs';
 import { client } from '../src/db.mjs';
 
+// create-branch-action does not register its outputs as secrets. Mask the password for the rest
+// of the job before anything else can print it.
+if (process.env.GITHUB_ACTIONS === 'true' && process.env.DATABASE_URL) {
+  const password = decodeURIComponent(new URL(process.env.DATABASE_URL).password);
+  if (password) console.log(`::add-mask::${password}`);
+}
+
 const started = performance.now();
 let attempts = 0;
 let lastError;
