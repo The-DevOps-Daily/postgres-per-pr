@@ -1,0 +1,96 @@
+# .github/workflows/preview-db.yml
+# A Postgres database per pull request: a Neon branch of main named preview/pr-<number>.
+# Needs a NEON_API_KEY secret and a NEON_PROJECT_ID variable (the Neon GitHub integration sets both).
+name: preview-db
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+# One run per pull request at a time, shared with the cleanup workflow.
+concurrency:
+  group: preview-db-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    # Pull requests from forks get no secrets.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BRANCH: preview/pr-${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci --ignore-scripts
+
+      # Backstop: Neon deletes the branch after 14 days even if no cleanup runs.
+      - name: Expiry date
+        run: echo "EXPIRES_AT=$(date -u --date '+14 days' +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+
+      - name: Create the Neon branch
+        id: branch
+        uses: neondatabase/create-branch-action@fb620d43d4c565abaf088b848a4e28e5c4ea4d9c # v6 (6.3.1)
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          branch_name: ${{ env.BRANCH }}
+          parent_branch: main
+          expires_at: ${{ env.EXPIRES_AT }}
+
+      # Replace these with your own migrate, seed and test commands.
+      - name: Migrate, seed, test
+        run: |
+          node scripts/wait-for-db.mjs
+          node scripts/migrate.mjs
+          node scripts/seed.mjs
+          npm test
+        env:
+          DATABASE_URL: ${{ steps.branch.outputs.db_url }}
+
+      - name: Schema diff against main
+        if: ${{ !cancelled() && steps.branch.outcome == 'success' }}
+        uses: neondatabase/schema-diff-action@80cfa8521628e890015b60f5291a7738926617dc # v1.0.1
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          compare_branch: ${{ env.BRANCH }}
+          base_branch: main
+
+      # One comment per pull request, updated on every push. No password in it.
+      - name: Comment the connection details
+        if: ${{ !cancelled() && steps.branch.outcome == 'success' }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          DB_HOST: ${{ steps.branch.outputs.db_host }}
+          BRANCH_ID: ${{ steps.branch.outputs.branch_id }}
+          JOB_STATUS: ${{ job.status }}
+        with:
+          script: |
+            const marker = '<!-- preview-db -->';
+            const { BRANCH, BRANCH_ID, DB_HOST, EXPIRES_AT, JOB_STATUS } = process.env;
+            const body = [
+              marker,
+              `### Preview database: \`${BRANCH}\``,
+              `- Neon branch: \`${BRANCH_ID}\`, expires ${EXPIRES_AT} or when this PR closes`,
+              `- Host: \`${DB_HOST}\`, database \`neondb\`, role \`neondb_owner\``,
+              `- Migrate, seed, test: ${JOB_STATUS === 'success' ? 'passed' : 'failed, see the run'}`,
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const old = comments.find((c) => c.body.startsWith(marker));
+            if (old) await github.rest.issues.updateComment({ owner, repo, comment_id: old.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body });
